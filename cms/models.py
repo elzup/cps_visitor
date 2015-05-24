@@ -2,19 +2,18 @@ from django.db import models
 
 # Create your models here.
 
-class Book(models.Model):
-    """書籍"""
-    name = models.CharField(u'書籍名', max_length=255)
-    publisher = models.CharField(u'出版社', max_length=255, blank=True)
-    page = models.IntegerField(u'ページ数', blank=True, default=0)
+class Visitor(models.Model):
+    """ユーザ"""
+    name = models.CharField(u'ユーザ名', max_length=255)
+    nfc_id = models.CharField(u'nfcID', max_length=255)
 
     def __str__(self):
         return self.name
 
-class Impression(models.Model):
-    """感想"""
-    book = models.ForeignKey(Book, verbose_name=u'書籍', related_name='impressions')
-    comment = models.TextField(u'コメント', blank=True)
+class Log(models.Model):
+    """訪問ログ"""
+    visitor = models.ForeignKey(Visitor, verbose_name=u'ユーザ', related_name='logs')
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
-        return self.comment
+        return self.id

@@ -3,86 +3,86 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.views.generic.list import ListView
 
-from cms.forms import BookForm, ImpressionForm
-from cms.models import Book, Impression
+from cms.forms import VisitorForm, LogForm
+from cms.models import Visitor, Log
 
 
-def book_list(request):
-    """書籍の一覧"""
-    # return HttpResponse(u'書籍の一覧')
-    books = Book.objects.all().order_by('id')
-    return render_to_response('cms/book_list.html',
-                              {'books': books},
+def visitor_list(request):
+    """の一覧"""
+    # return HttpResponse(u'訪問者の一覧')
+    visitors = Visitor.objects.all().order_by('id')
+    return render_to_response('cms/visitor_list.html',
+                              {'visitors': visitors},
                               context_instance=RequestContext(request))
 
 
-def book_edit(request, book_id=None):
-    """書籍の編集"""
-    if book_id:
-        book = get_object_or_404(Book, pk=book_id)
+def visitor_edit(request, visitor_id=None):
+    """訪問者の編集"""
+    if visitor_id:
+        visitor = get_object_or_404(Visitor, pk=visitor_id)
     else:
-        book = Book()
+        visitor = Visitor()
 
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=book)
+        form = VisitorForm(request.POST, instance=visitor)
         if form.is_valid():
-            book.save()
-            return redirect('cms:book_list')
+            visitor.save()
+            return redirect('cms:visitor_list')
     else:
-        form = BookForm(instance=book)
+        form = VisitorForm(instance=visitor)
 
-    return render_to_response('cms/book_edit.html',
-                              dict(form=form, book_id=book_id),
+    return render_to_response('cms/visitor_edit.html',
+                              dict(form=form, visitor_id=visitor_id),
                               context_instance=RequestContext(request))
 
 
-def book_del(request, book_id):
-    """書籍の削除"""
-    book = get_object_or_404(Book, pk=book_id)
-    book.delete()
-    return redirect('cms:book_list')
+def visitor_del(request, visitor_id):
+    """訪問者の削除"""
+    visitor = get_object_or_404(Visitor, pk=visitor_id)
+    visitor.delete()
+    return redirect('cms:visitor_list')
 
 
-def impression_edit(request, book_id, impression_id=None):
-    """感想の編集"""
-    book = get_object_or_404(Book, pk=book_id)  # 親の書籍を読む
-    if impression_id:  # impression_id が指定されている (修正時)
-        impression = get_object_or_404(Impression, pk=impression_id)
-    else:  # impression_id が指定されていない (追加時)
-        impression = Impression()
+def log_edit(request, visitor_id, log_id=None):
+    """ログの編集"""
+    visitor = get_object_or_404(Visitor, pk=visitor_id)  # 親の訪問者を読む
+    if log_id:  # log_id が指定されている (修正時)
+        log = get_object_or_404(Log, pk=log_id)
+    else:  # log_id が指定されていない (追加時)
+        log = Log()
 
     if request.method == 'POST':
-        form = ImpressionForm(request.POST, instance=impression)  # POST された request データからフォームを作成
+        form = LogForm(request.POST, instance=log)  # POST された request データからフォームを作成
         if form.is_valid():  # フォームのバリデーション
-            impression = form.save(commit=False)
-            impression.book = book  # この感想の、親の書籍をセット
-            impression.save()
-            return redirect('cms:impression_list', book_id=book_id)
+            log = form.save(commit=False)
+            log.visitor = visitor  # このログの、親の訪問者をセット
+            log.save()
+            return redirect('cms:log_list', visitor_id=visitor_id)
     else:  # GET の時
-        form = ImpressionForm(instance=impression)  # impression インスタンスからフォームを作成
+        form = LogForm(instance=log)  # log インスタンスからフォームを作成
 
-    return render_to_response('cms/impression_edit.html',
-                              dict(form=form, book_id=book_id, impression_id=impression_id),
+    return render_to_response('cms/log_edit.html',
+                              dict(form=form, visitor_id=visitor_id, log_id=log_id),
                               context_instance=RequestContext(request))
 
 
-def impression_del(request, book_id, impression_id):
-    """感想の削除"""
-    impression = get_object_or_404(Impression, impression_id=impression_id)
-    impression.delete()
-    return redirect('cms:impression_list', book_id=book_id)
+def log_del(request, visitor_id, log_id):
+    """ログの削除"""
+    log = get_object_or_404(Log, log_id=log_id)
+    log.delete()
+    return redirect('cms:log_list', visitor_id=visitor_id)
 
 
-class ImpressionList(ListView):
-    """感想の一覧"""
-    context_object_name = 'impressions'
-    template_name = 'cms/impression_list.html.html'
+class LogList(ListView):
+    """ログの一覧"""
+    context_object_name = 'logs'
+    template_name = 'cms/log_list.html.html'
     paginate_by = 2
 
     def get(self, request, *args, **kwargs):
-        book = get_object_or_404(Book, pk=kwargs['book_id'])
-        impressions = book.impressions.all().order_by('id')
-        self.object_list = impressions
+        visitor = get_object_or_404(Visitor, pk=kwargs['visitor_id'])
+        logs = visitor.logs.all().order_by('id')
+        self.object_list = logs
 
-        context = self.get_context_data(object_list=self.object_list, book=book)
+        context = self.get_context_data(object_list=self.object_list, visitor=visitor)
         return self.render_to_response(context)

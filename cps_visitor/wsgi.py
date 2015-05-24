@@ -1,5 +1,5 @@
 """
-WSGI config for character_board project.
+WSGI config for cps_visitor project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.7/howto/deployment/wsgi/
 """
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "character_board.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cps_visitor.settings")
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()

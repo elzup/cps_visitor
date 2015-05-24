@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.forms import ModelForm
-from cms.models import Book, Impression
+from cms.models import Visitor, Log
 
 
-class BookForm(ModelForm):
-    """書籍のフォーム"""
+class VisitorForm(ModelForm):
+    """訪問者のフォーム"""
     class Meta:
-        model = Book
-        fields = ('name', 'publisher', 'page', )
+        model = Visitor
+        fields = ('name', )
 
-class ImpressionForm(ModelForm):
-    """感想のフォーム"""
+class LogForm(ModelForm):
+    """ログのフォーム"""
     class Meta:
-        model = Impression
-        fields = ('comment', )
+        model = Log
+        fields = "__all__"
 
 

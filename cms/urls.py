@@ -2,15 +2,15 @@ from django.conf.urls import patterns, url
 from cms import views
 
 urlpatterns = patterns('',
-                       url(r'^book/$', views.book_list, name='book_list'),
-                       url(r'^book/add/$', views.book_edit, name='book_add'),
-                       url(r'^book/mod/(?P<book_id>\d+)/$', views.book_edit, name='book_mod'),
-                       url(r'^book/del/(?P<book_id>\d+)/$', views.book_del, name='book_del'),
+                       url(r'^visitor/$', views.visitor_list, name='visitor_list'),
+                       url(r'^visitor/add/$', views.visitor_edit, name='visitor_add'),
+                       url(r'^visitor/mod/(?P<visitor_id>\d+)/$', views.visitor_edit, name='visitor_mod'),
+                       url(r'^visitor/del/(?P<visitor_id>\d+)/$', views.visitor_del, name='visitor_del'),
 
-                       url(r'^impression/(?P<book_id>\d+)/$', views.ImpressionList.as_view(), name='impression_list'),
-                       url(r'^impression/add/(?P<book_id>\d+)/$', views.impression_edit, name='impression_add'),
-                       url(r'^impression/mod/(?P<book_id>\d+)/(?P<impression_id>\d+)/$', views.impression_edit,
-                           name='impression_mod'),
-                       url(r'^impression/del/(?P<book_id>\d+)/(?P<impression_id>\d+)/$', views.impression_del,
-                           name='impression_del'),
+                       url(r'^log/(?P<visitor_id>\d+)/$', views.LogList.as_view(), name='log_list'),
+                       url(r'^log/add/(?P<visitor_id>\d+)/$', views.log_edit, name='log_add'),
+                       url(r'^log/mod/(?P<visitor_id>\d+)/(?P<log_id>\d+)/$', views.log_edit,
+                           name='log_mod'),
+                       url(r'^log/del/(?P<visitor_id>\d+)/(?P<log_id>\d+)/$', views.log_del,
+                           name='log_del'),
                        )

@@ -1,5 +1,5 @@
 """
-Django settings for character_board project.
+Django settings for cps_visitor project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -14,7 +14,7 @@ from configparser import RawConfigParser
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 config = RawConfigParser()
-config.read(os.path.join(BASE_DIR, 'character_board', 'config.ini'))
+config.read(os.path.join(BASE_DIR, 'cps_visitor', 'config.ini'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -55,9 +55,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'character_board.urls'
+ROOT_URLCONF = 'cps_visitor.urls'
 
-WSGI_APPLICATION = 'character_board.wsgi.application'
+WSGI_APPLICATION = 'cps_visitor.wsgi.application'
 
 
 # Database
@@ -65,12 +65,8 @@ WSGI_APPLICATION = 'character_board.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': config.get('database', 'DATABASE_ENGINE'),
-        'NAME': config.get('database', 'DATABASE_NAME'),
-        'USER': config.get('database', 'DATABASE_USER'),
-        'PASSWORD': config.get('database', 'DATABASE_PASSWORD'),
-        'HOST': config.get('database', 'DATABASE_HOST'),
-        'PORT': config.get('database', 'DATABASE_PORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
 

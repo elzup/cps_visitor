@@ -1,12 +1,12 @@
 from django.contrib import admin
-from cms.models import Book, Impression
+from cms.models import Visitor, Log
 
-class BookAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'publisher', 'page')
+class VisitorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
     list_display_links = ('id', 'name',)
-admin.site.register(Book, BookAdmin)
+admin.site.register(Visitor, VisitorAdmin)
 
-class ImpressionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'comment')
-    list_display_links = ('id', 'comment',)
-admin.site.register(Impression, ImpressionAdmin)
+class LogAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created_at')
+    list_display_links = ('id', 'created_at',)
+admin.site.register(Log, LogAdmin)

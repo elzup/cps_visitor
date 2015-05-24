@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}訪問者の一覧{% endblock title %}
+
+{% block extrahead %}
+    <style>
+        table {
+            margin-top: 8px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    <h3 class="page-header">訪問者の一覧</h3>
+    <a href="{% url 'cms:visitor_add' %}" class="btn btn-default btn-sm">追加</a>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>訪問者名</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for visitor in visitors %}
+            <tr>
+                <td>{{ visitor.id }}</td>
+                <td>{{ visitor.name }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{% url 'cms:visitor_mod' visitor_id=visitor.id %}">修正</a>
+                    <a class="btn btn-default btn-sm" href="{% url 'cms:visitor_del' visitor_id=visitor.id %}">削除</a>
+                    <a href="{% url 'cms:log_list' visitor_id=visitor.id %}" class="btn btn-default btn-sm btn-primary">訪問ログ</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
