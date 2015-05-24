@@ -7,12 +7,10 @@ class VisitorForm(ModelForm):
     """訪問者のフォーム"""
     class Meta:
         model = Visitor
-        fields = ('name', )
+        fields = "__all__"
 
 class LogForm(ModelForm):
     """ログのフォーム"""
     class Meta:
         model = Log
         fields = "__all__"
-
-

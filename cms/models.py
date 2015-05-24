@@ -4,8 +4,10 @@ from django.db import models
 
 class Visitor(models.Model):
     """ユーザ"""
-    name = models.CharField(u'ユーザ名', max_length=255)
-    nfc_id = models.CharField(u'nfcID', max_length=255)
+    name = models.CharField(u'ユーザ名', max_length=64)
+    full_name = models.CharField(u'本名', max_length=64, default=None)
+    univ_id = models.CharField(u'学籍番号', max_length=64, default=None)
+    nfc_id = models.CharField(u'nfcID', max_length=64, default=None)
 
     def __str__(self):
         return self.name

@@ -19,6 +19,9 @@
         <tr>
             <th>ID</th>
             <th>訪問者名</th>
+            <th>名前</th>
+            <th>学籍番号</th>
+            <th>felica id</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -27,6 +30,9 @@
             <tr>
                 <td>{{ visitor.id }}</td>
                 <td>{{ visitor.name }}</td>
+                <td>{{ visitor.full_name }}</td>
+                <td>{{ visitor.univ_id }}</td>
+                <td>{{ visitor.nfc_id }}</td>
                 <td>
                     <a class="btn btn-default btn-sm" href="{% url 'cms:visitor_mod' visitor_id=visitor.id %}">修正</a>
                     <a class="btn btn-default btn-sm" href="{% url 'cms:visitor_del' visitor_id=visitor.id %}">削除</a>
